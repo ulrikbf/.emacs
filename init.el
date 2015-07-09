@@ -1,0 +1,83 @@
+
+;;---Packages/Plugins
+;;=========================================================================================================
+
+;;---Evil-mode
+(add-to-list 'load-path "~/.emacs.d/plugins/evil-mode")
+(require 'evil)
+(evil-mode 1)
+
+;;---Powerline(similar to VIM-powerline)
+(add-to-list 'load-path "~/.emacs.d/plugins/powerline")
+(require 'powerline)
+
+;;---Evil Mode compability for Powerline
+(add-to-list 'load-path "~/.emacs.d/plugins/powerline-evil") 
+(require 'powerline-evil)
+(powerline-evil-center-color-theme)
+
+;;Third party repo's.
+(require 'package)
+(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/")) ; Third party
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/")) ; Third party
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t) ; Third party
+
+;;---Helm Config
+(package-initialize)
+(require 'helm)
+(require 'helm-config)
+(define-key helm-map (kbd "C-j") 'helm-next-line) ; Rebind
+(define-key helm-map (kbd "C-k") 'helm-previous-line) ; Rebind
+(helm-mode 1)
+
+;;---Yasnippets
+(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;;---Auto-complete
+(ac-config-default)
+
+;;JS3-mode, improved javascript!
+(autoload 'js3-mode "js3" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
+
+
+
+;;---Emacs config
+;;=========================================================================================================
+
+;;---Display recently used files on startup.
+(custom-set-variables
+'(initial-buffer-choice (quote recentf-open-files)))
+
+;;---Display line numbers
+(setq global-linum-mode t)
+
+
+;;---Emacs functions
+;;=========================================================================================================
+(defun my-split-window-func ()
+    (interactive)
+    (split-window-vertically)
+    (set-window-buffer (next-window) (other-buffer)))
+
+
+;;---Cosmetic changes
+;;===========================================================================================================
+(set-frame-font "Source Code Pro-16" nil t)
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+
+;;---Themes
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/noctilux-theme")
+(load-theme 'noctilux t)
+
+;;---Keybinds
+(global-set-key "\C-x2" 'my-split-window-func )
+
+;;---Additional packages installed from package archives:
+;;============================================================================================================
+;;---Helm, incremental completaion and selecting narrowing framework. [URL: https://emacs-helm.github.io/helm/]
+;;---Auto-complete, auto-complete for Emacs. [URL: https://github.com/auto-complete/auto-complete]
